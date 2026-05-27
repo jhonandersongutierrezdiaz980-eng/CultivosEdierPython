@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Huertos Urbanos Comunitarios</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="text-success">🌱 Panel de Control - Huerto Comunitario</h1>
+            <a href="{% url 'cultivo_create' %}" class="btn btn-success">+ Registrar Nuevo Cultivo</a>
+        </div>
+        
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Cultivo</th>
+                            <th>Vecino / Agricultor</th>
+                            <th>Zona Asignada</th>
+                            <th>Cantidad</th>
+                            <th>Fecha Registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cultivo in cultivos %}
+                        <tr>
+                            <td><strong>{{ cultivo.nombre }}</strong></td>
+                            <td>{{ cultivo.agricultor }}</td>
+                            <td>{{ cultivo.get_zona_display }}</td>
+                            <td><span class="badge bg-info text-dark">{{ cultivo.cantidad_sembrada }} uds</span></td>
+                            <td>{{ cultivo.fecha_siembra }}</td>
+                            <td>
+                                <a href="{% url 'cultivo_edit' cultivo.pk %}" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="{% url 'cultivo_delete' cultivo.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">No hay cultivos registrados en el sistema actualmente.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
